@@ -2,10 +2,11 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-const path = require('node:path')
-const db_path =path.join(__dirname, 'item.db')
+import loginAuth from './login.js'
+const db_path = 'data.db'
+console.log(db_path)
+import sqlite3 from 'sqlite3'
 //connect to the database
-const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database(db_path, (err) => {
   if (err) {
     console.log('Could not connect to database', err)
@@ -13,7 +14,6 @@ const db = new sqlite3.Database(db_path, (err) => {
     console.log('Connected to database')
   }
 })
-
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -30,8 +30,9 @@ function createWindow() {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+    loginAuth(mainWindow, db)
   })
-
+  // Open all external links in the default browser.
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
@@ -77,6 +78,7 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.

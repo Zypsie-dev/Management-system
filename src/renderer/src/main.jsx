@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './assets/Styles/App_global.css'
-import Route from './Route'
+import App from './App'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Route />
+    <App />
   </React.StrictMode>
 )

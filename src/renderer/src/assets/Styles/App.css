@@ -1,0 +1,24 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: "Montserrat";
+    box-sizing: border-box;
+}
+:root{
+    --white-color : #ffffff;
+    --dark-color : #1d1d1d;
+    --text-color: rgb(192, 238, 242);
+    --active-color:rgb(83, 127, 231);
+    --header-color:rgb(6, 143, 255);
+}
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background: linear-gradient(to right bottom, rgba(41, 8, 48, 0.95) 0, rgba(82, 65, 143, 0.95) 50%, rgba(114, 183, 227, 0.95) 100%);
+    padding: 0px;
+    margin:0px;
+    color:var(--text-color);
+    z-index: -1;
+}
