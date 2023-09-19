@@ -14,6 +14,7 @@ const db = new sqlite3.Database(db_path, (err) => {
     console.log('Connected to database')
   }
 })
+let islogged = false
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -78,7 +79,6 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.

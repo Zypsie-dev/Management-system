@@ -1,10 +1,14 @@
 import { BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
+import bcrypt from 'bcrypt'
+import registerUser from './register.js'
+let islogged = false
 function loginAuth(mainWindow, db) {
+  console.log(islogged)
   const loginWindow = new BrowserWindow({
     parent: mainWindow,
     width: 400,
-    height: 500,
+    height: 600,
     modal: true,
     frameless: true,
     show: false,
@@ -17,32 +21,58 @@ function loginAuth(mainWindow, db) {
   })
   //get url for loading login page
   const appURL = mainWindow.webContents.getURL()
-  loginWindow.loadURL(join(appURL, '/login'))
-  loginWindow.show()
+  if (!islogged) {
+    loginWindow.loadURL(join(appURL, '/login'))
+    loginWindow.show()
+    //to handle login request from login page
+    ipcMain.handle('login', async (event, arg) => {
+      const { username, password } = arg
+      const selectUserSQL = 'SELECT * FROM User WHERE username = ?'
 
-  //to handle login request
-  ipcMain.on('login', (event, arg) => {
-    const { username, password } = arg
-    const selectUserSQL = 'SELECT * FROM User WHERE username = ?'
-    db.get(selectUserSQL, [username], (selectUserErr, row) => {
-      if (selectUserErr) {
-        console.error('Error querying the database:', selectUserErr.message)
-        event.returnValue = { success: false, message: 'Database query error' }
-      } else if (!row) {
-        // Username not found
-        console.log('Username not found')
-        event.returnValue = { success: false, message: 'Username not found' }
-      } else if (row.password !== password) {
-        // Incorrect password
-        console.log('Incorrect password')
-        event.returnValue = { success: false, message: 'Incorrect password' }
-      } else {
-        // Successful login
-        console.log('Login successful')
-        event.returnValue = { success: true, message: 'Login successful' }
-        loginWindow.close()
+      try {
+        const row = await new Promise((resolve, reject) => {
+          db.get(selectUserSQL, [username], (selectUserErr, row) => {
+            if (selectUserErr) {
+              console.error('Error querying the database:', selectUserErr.message)
+              reject('Database query error')
+            } else {
+              resolve(row)
+            }
+          })
+        })
+
+        if (!row) {
+          // Username not found
+          console.log('Username not found')
+          return { success: false, message: 'Username not found' }
+        } else {
+          const isPasswordValid = await bcrypt.compare(password, row.password)
+          if (!isPasswordValid) {
+            // Incorrect password
+            console.log('Incorrect password')
+            return { success: false, message: 'Incorrect password' }
+          } else {
+            // Successful login
+            console.log('Login successful')
+            islogged = true
+            loginWindow.close()
+            return { success: true, message: 'Login successful' }
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error)
+        return { success: false, message: 'An error occurred' }
       }
     })
-  })
+    //to handle register request from login page
+    registerUser(loginWindow, db)
+  }
 }
+
 export default loginAuth
+
+
+
+
+
+

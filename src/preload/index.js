@@ -7,12 +7,12 @@ const ipc = {
   render: {
     // From render to main.
     send: [
-      'login' // Channel name
+      // Channel name
     ],
     // From main to render.
     receive: [],
     // From render to main and back again.
-    sendReceive: []
+    sendReceive: ['login', 'register']
   }
 }
 
