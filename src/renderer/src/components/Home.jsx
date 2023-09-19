@@ -1,6 +1,6 @@
 function Home() {
   return (
-    <div className="content-container">
+    <div className="content">
         <section id="introduction">
             <h2>Welcome to Numerical Method Calculator</h2>
             <p>Your all-in-one solution for solving numerical methods problems.</p>

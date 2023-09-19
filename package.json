@@ -24,6 +24,7 @@
     "electron-updater": "^6.1.1",
     "framer-motion": "^10.16.4",
     "os": "^0.1.2",
+    "react-icons": "^4.11.0",
     "react-router-dom": "^6.16.0",
     "sqlite3": "^5.1.6"
   },
