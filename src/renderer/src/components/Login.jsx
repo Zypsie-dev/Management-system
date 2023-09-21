@@ -65,7 +65,10 @@ function Login(props){
                                         if (!res.success)
                                             setError(res.message)
                                         else
-                                            setSuccess(res.message)
+                                            {
+                                                setSuccess(res.message)
+                                                window.ipcRender.send('login_success')
+                                            }
                                     })
                                     .catch((error) => {
                                         console.error("Error:", error);

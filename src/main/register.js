@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron'
+import { ipcMain, ipcRenderer } from 'electron'
 import bcrypt from 'bcrypt'
 
 function registerUser(loginWindow, db) {

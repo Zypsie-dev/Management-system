@@ -2,10 +2,16 @@ import { BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import bcrypt from 'bcrypt'
 import registerUser from './register.js'
-let islogged = false
+import { log } from 'console'
+let loginWindow = null
+let isCreated = false
 function loginAuth(mainWindow, db) {
-  console.log(islogged)
-  const loginWindow = new BrowserWindow({
+  //get url for loading login page
+  if (loginWindow) {
+    loginWindow.close()
+    loginWindow = null
+  }
+  loginWindow = new BrowserWindow({
     parent: mainWindow,
     width: 400,
     height: 600,
@@ -19,11 +25,11 @@ function loginAuth(mainWindow, db) {
       sandbox: false
     }
   })
-  //get url for loading login page
   const appURL = mainWindow.webContents.getURL()
-  if (!islogged) {
-    loginWindow.loadURL(join(appURL, '/login'))
-    loginWindow.show()
+  console.log('Login window create')
+  loginWindow.loadURL(join(appURL, '/login'))
+  if (!isCreated) {
+    isCreated = true
     //to handle login request from login page
     ipcMain.handle('login', async (event, arg) => {
       const { username, password } = arg
@@ -40,7 +46,6 @@ function loginAuth(mainWindow, db) {
             }
           })
         })
-
         if (!row) {
           // Username not found
           console.log('Username not found')
@@ -54,7 +59,6 @@ function loginAuth(mainWindow, db) {
           } else {
             // Successful login
             console.log('Login successful')
-            islogged = true
             loginWindow.close()
             return { success: true, message: 'Login successful' }
           }
@@ -65,14 +69,14 @@ function loginAuth(mainWindow, db) {
       }
     })
     //to handle register request from login page
-    registerUser(loginWindow, db)
   }
+  loginWindow.on('ready-to-show', () => {
+    loginWindow.show()
+  })
+  loginWindow.on('closed', () => {
+    loginWindow = null
+  })
+  loginWindow.webContents.openDevTools()
 }
-
 export default loginAuth
-
-
-
-
-
 

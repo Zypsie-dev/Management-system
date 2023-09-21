@@ -17,6 +17,7 @@ function NavBar (){
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+        window.ipcRender.send('logout')
     };
 
     return(

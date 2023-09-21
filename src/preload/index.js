@@ -6,9 +6,7 @@ const ipcRenderer = require('electron').ipcRenderer
 const ipc = {
   render: {
     // From render to main.
-    send: [
-      // Channel name
-    ],
+    send: ['logout', 'login_success'],
     // From main to render.
     receive: [],
     // From render to main and back again.
