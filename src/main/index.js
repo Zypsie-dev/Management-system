@@ -6,7 +6,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import sqlite3 from 'sqlite3'
 import loginAuth from './login.js'
-import registerUser from './register.js'
+import { inventory, deleteItem } from './inventory.js'
 
 let mainWindow // Declare a global variable to store the main window
 let islogged = false
@@ -82,7 +82,17 @@ app.on('window-all-closed', () => {
   }
 })
 
+app.on('quit', () => {
+  try {
+    db.close()
+  } catch (err) {
+    console.log('Could not close database', err)
+  }
+})
+
 ipcMain.on('logout', async (event, arg) => {
   islogged = false
   loginAuth(mainWindow, db)
 })
+
+inventory(db)

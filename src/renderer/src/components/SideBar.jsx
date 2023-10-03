@@ -34,14 +34,14 @@ function MenuItem(props){
     );
 }
 
-function SideBar (){
+function SideBar ({isOpen}){
     const Topics = ["Dashboard","Inventoty","Setting"];
     return(
-    <nav className="sidebar">
-        <div className="sideHead">
+    <nav className={isOpen? 'sidebar open': 'sidebar close'}>
+        <header className="sideHead">
             <img src= {iconPath} className="main_logo"/>
             <h4>Management System</h4>
-        </div>
+        </header>
         <div className="sideContent">
             <MenuItem names= {Topics}/>
         </div>

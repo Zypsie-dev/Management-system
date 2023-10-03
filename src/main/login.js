@@ -1,8 +1,6 @@
 import { BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import bcrypt from 'bcrypt'
-import registerUser from './register.js'
-import { log } from 'console'
 let loginWindow = null
 let isCreated = false
 function loginAuth(mainWindow, db) {
@@ -76,7 +74,6 @@ function loginAuth(mainWindow, db) {
   loginWindow.on('closed', () => {
     loginWindow = null
   })
-  loginWindow.webContents.openDevTools()
 }
 export default loginAuth
 

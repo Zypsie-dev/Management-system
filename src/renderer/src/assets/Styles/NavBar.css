@@ -2,6 +2,7 @@
     width: 100%;
     background: black;
         margin: 0;
+        z-index: 100;
 }
 
 .search_bar {
@@ -46,3 +47,4 @@
     align-items: center;
     column-gap: 25px;
 }
+

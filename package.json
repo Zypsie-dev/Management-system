@@ -23,6 +23,8 @@
     "bcrypt": "^5.1.1",
     "electron-updater": "^6.1.1",
     "framer-motion": "^10.16.4",
+    "hamburger-react": "^2.5.0",
+    "mui-datatables": "^4.3.0",
     "os": "^0.1.2",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.16.0",

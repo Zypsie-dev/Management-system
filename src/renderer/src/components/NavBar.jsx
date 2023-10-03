@@ -7,9 +7,9 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import userLogo from '../resources/user.png';
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
-function NavBar (){
+import Hamburger from 'hamburger-react';
+const settings = ['Profile', 'Logout'];
+function NavBar ({isOpen,toggle}){
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -23,30 +23,30 @@ function NavBar (){
     return(
         <nav className="navbar">
             <div className="navbar_content">
+               <Hamburger color='white' size={25} toggled={isOpen} toggle={toggle}/>
                 <Box sx={{
                     width: '100%',
-                    flexGrow: 1,
                     display: 'flex',
                     justifyContent: 'flex-end',
                     padding: '5px 10px 0px 0px',
                 }}>
                     <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt="Remy Sharp" src={userLogo} />
+                        <Avatar src={userLogo} />
                     </IconButton>
                     </Tooltip>
                     <Menu
-                    sx={{ mt: '45px' }}
+                    sx={{ m: '30px 0px' }}
                     id="menu-appbar"
                     anchorEl={anchorElUser}
                     anchorOrigin={{
                         vertical: 'top',
-                        horizontal: 'right',
+                        horizontal: 'left',
                     }}
                     keepMounted
                     transformOrigin={{
                         vertical: 'top',
-                        horizontal: 'right',
+                        horizontal: 'left',
                     }}
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}

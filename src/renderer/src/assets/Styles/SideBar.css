@@ -3,9 +3,10 @@
     background: #1c2537;
         width: 15rem;
         padding: 0px 10px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     transition: all 0.5s ease;
     height: 100vh;
+    margin: 0;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 0.3fr 1.8fr 0.3fr;
@@ -15,6 +16,7 @@
             "sideHead sideHead sideHead"
             "sideContent sideContent sideContent"
             "sideFoot sideFoot sideFoot";
+    transition: 0.5s linear;
 }
     
 .sideHead {
@@ -24,6 +26,7 @@
     align-items: center;
     margin: 0px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.859);
+    height: max-content;
 }
 
 .sideContent {
@@ -49,10 +52,6 @@
     aspect-ratio: 1.5/1;
     object-fit: contain;
     mix-blend-mode: lighten;
-}
-.sidebar.close {
-    padding: 60px 0;
-    width: 80px;
 }
 .sidebar::-webkit-scrollbar {
     display: none;
@@ -89,9 +88,7 @@
     white-space: nowrap;
 }
 
-.sidebar.close .navlink {
-    display: none;
-}
+
 
 .nav_link:hover {
     background: rgba(255, 255, 255, 0.07);
@@ -111,9 +108,7 @@
     color: var(--white-color);
 }
 
-.sidebar.close .nav_link:hover {
-    background: var(--white-color);
-}
+
 
 .submenu_item {
     cursor: pointer;
@@ -123,56 +118,39 @@
     display: none;
 }
 
-.sidebar.close .submenu {
-    display: none;
-}
-
-.show_submenu~.submenu {
-    display: block;
-}
-
-.show_submenu .arrow-left {
-    transform: rotate(90deg);
-}
-
 .submenu .sublink {
     padding: 15px 15px 15px 52px;
 }
 
-.sidebar.hoverable .collapse_sidebar {
-    display: none;
-}
-
-#sidebarOpen {
-    display: none;
-}
 .active {
     background-color: var(--active-color);
 }
+
 .active .navlink_icon {
     color: var(--dark-color);
 }
+
 .active .navlink {
     color: var(--dark-color);
 }
-@media screen and (max-width < 500px) {
-    #sidebarOpen {
-        font-size: 25px;
-        display: block;
-        margin-right: 10px;
-        cursor: pointer;
-        color: var(--grey-color);
+.hamburger-react {
+    display: none;
+}
+
+@media only screen and (max-width: 900px) {
+    #root {
+        grid-template-columns: auto 1fr 1fr;
+        grid-template-rows: 0.2fr 1.8fr 1fr;
+        gap: 0px;
     }
 
-    .sidebar.close {
-        left: -100%;
-    }
-
-    .search_bar {
-        display: none;
-    }
-
-    .sidebar.close .bottom_content {
-        left: -100%;
-    }
+.close {
+    transform: translateX(-100%);
+    width: 0;
+    margin: 0;
+    padding: 0;
+}
+.hamburger-react {
+    display: inline;
+}
 }

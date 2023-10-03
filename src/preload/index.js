@@ -10,7 +10,7 @@ const ipc = {
     // From main to render.
     receive: [],
     // From render to main and back again.
-    sendReceive: ['login', 'register']
+    sendReceive: ['login', 'register', 'inventory']
   }
 }
 
